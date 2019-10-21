@@ -54,8 +54,11 @@ public class MainActivity extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                productList.add(makeProduct(prodName, prodPrice, prodAmount));
-                adapter.notifyDataSetChanged();
+                Product product = makeProduct(prodName, prodPrice, prodAmount);
+                if (product != null){
+                    productList.add(product);
+                    adapter.notifyDataSetChanged();
+                }
             }
         });
 
@@ -90,17 +93,37 @@ public class MainActivity extends AppCompatActivity {
      * @return  продукт
      */
     private Product makeProduct(EditText prodName, EditText prodPrice, EditText prodAmount){
+        try {
+            if (prodName.getText().toString().equals("") || prodName.getText() == null) {
+                Toast.makeText(getApplicationContext(), "Enter product name",
+                        Toast.LENGTH_SHORT).show();
+                return null;
+            }
+            if (prodPrice.getText().toString().equals("") || prodName.getText() == null) {
+                Toast.makeText(getApplicationContext(), "Enter product price",
+                        Toast.LENGTH_SHORT).show();
+                return null;
+            }
+            if (prodAmount.getText().toString().equals("") || prodName.getText() == null) {
+                Toast.makeText(getApplicationContext(), "Enter product amount",
+                        Toast.LENGTH_SHORT).show();
+                return null;
+            }
 
-        Product product = new Product(
-                prodName.getText().toString(),
-                Integer.parseInt(prodAmount.getText().toString()),
-                Double.parseDouble(prodPrice.getText().toString())
-        );
-        prodName.setText("");
-        prodAmount.setText("");
-        prodPrice.setText("");
+            Product product = new Product(
+                    prodName.getText().toString(),
+                    Integer.parseInt(prodAmount.getText().toString()),
+                    Double.parseDouble(prodPrice.getText().toString())
+            );
+            prodName.setText("");
+            prodAmount.setText("");
+            prodPrice.setText("");
 
-        return product;
+            return product;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
