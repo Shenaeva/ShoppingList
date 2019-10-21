@@ -23,7 +23,7 @@
             <ListView
                 android:id="@+id/mainListView"
                 android:layout_width="414dp"
-                android:layout_height="268dp"
+                android:layout_height="530dp"
                 android:scrollbars="vertical">
 
             </ListView>
